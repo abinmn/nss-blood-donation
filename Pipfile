@@ -5,6 +5,7 @@ verify_ssl = true
 
 [dev-packages]
 pydocstyle = "*"
+autopep8 = "*"
 
 [packages]
 django = "*"
