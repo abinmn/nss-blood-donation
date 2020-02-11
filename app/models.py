@@ -1,3 +1,5 @@
+from django.contrib.auth.models import User
+
 from django.db import models
 
 
@@ -62,3 +64,13 @@ class Donation(models.Model):
         on_delete=models.CASCADE,
         related_name="donation_history")
     donated_date = models.DateField(auto_now=True)
+
+
+class VolunteerProfile(models.Model):
+    """Table to store District details."""
+
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    college = models.ForeignKey(
+        College,
+        on_delete=models.CASCADE,
+        related_name="volunteers")
