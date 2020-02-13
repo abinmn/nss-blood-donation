@@ -25,10 +25,17 @@ deploy:
     - ssh-add ~/.ssh/id_rsa
     - ssh-keyscan -H $DEPLOYMENT_SERVER_IP >> ~/.ssh/known_hosts  
     ###### Pull the registry to deployment server and recereate the docker service #####    
+<<<<<<< HEAD
     - ssh $DEVELOPMENT_SERVER_USERNAME@$DEVELOPMENT_SERVER_IP docker system prune -f
     - ssh $DEVELOPMENT_SERVER_USERNAME@$DEVELOPMENT_SERVER_IP docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY 
     - ssh $DEVELOPMENT_SERVER_USERNAME@$DEVELOPMENT_SERVER_IP docker pull $CI_REGISTRY/$CI_PROJECT_PATH:latest
     - ssh $DEVELOPMENT_SERVER_USERNAME@$DEVELOPMENT_SERVER_IP docker run -d -p 8080:80 $CI_REGISTRY/$CI_PROJECT_PATH:latest
+=======
+    - ssh $DEPLOYMENT_SERVER_USERNAME@$DEPLOYMENT_SERVER_IP docker system prune -f
+    - ssh $DEPLOYMENT_SERVER_USERNAME@$DEPLOYMENT_SERVER_IP docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY 
+    - ssh $DEPLOYMENT_SERVER_USERNAME@$DEPLOYMENT_SERVER_IP docker pull $CI_REGISTRY/$CI_PROJECT_PATH:latest
+    - ssh $DEPLOYMENT_SERVER_USERNAME@$DEPLOYMENT_SERVER_IP docker run -d -p 8080:80 $CI_REGISTRY/$CI_PROJECT_PATH:latest
+>>>>>>> 53f18487f3ecae3f3d835fb4e353f72ffb4c23cd
 
   only:
     - master
