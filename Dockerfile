@@ -5,3 +5,4 @@ WORKDIR /app
 
 RUN pipenv lock --requirements > requirements.txt
 RUN pip install -r requirements.txt
+ENTRYPOINT "/app/entrypoint.sh"
