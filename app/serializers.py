@@ -14,3 +14,10 @@ class BloodGroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.BloodGroup
         fields = ('id', 'group')
+
+
+class TalukSerializer(serializers.ModelSerializer):
+    """Serialize Taluk object."""
+    class Meta:
+        model = models.Taluk
+        fields = ('id', 'name')

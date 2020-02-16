@@ -8,6 +8,9 @@ class District(models.Model):
 
     name = models.CharField(max_length=200)
 
+    def __str__(self):
+        return self.name
+
 
 class Taluk(models.Model):
     """Table to store District details."""
@@ -17,6 +20,9 @@ class Taluk(models.Model):
         District,
         on_delete=models.CASCADE,
         related_name="taluks")
+
+    def __str__(self):
+        return self.name
 
 
 class College(models.Model):
@@ -28,11 +34,17 @@ class College(models.Model):
         on_delete=models.CASCADE,
         related_name="colleges")
 
+    def __str__(self):
+        return self.name
+
 
 class BloodGroup(models.Model):
     """Table to store blood group details."""
 
     group = models.CharField(max_length=10)
+
+    def __str__(self):
+        return self.group
 
 
 class Student(models.Model):
@@ -54,6 +66,9 @@ class Student(models.Model):
         on_delete=models.CASCADE,
         related_name="students"
     )
+
+    def __str__(self):
+        return f"{self.name} - {self.college}"
 
 
 class Donation(models.Model):
