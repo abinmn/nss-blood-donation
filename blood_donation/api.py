@@ -1,6 +1,5 @@
 from rest_framework import routers
 from app.views import district
-from app.views import taluk
 from app.views import blood_group
 
 
