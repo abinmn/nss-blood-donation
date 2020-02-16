@@ -3,6 +3,8 @@ services:
   - docker:dind
 before_script:
   - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+  - chmod +x ./setup_env.sh
+  - ./setup_env.sh
 stages:
   - build
   - development
