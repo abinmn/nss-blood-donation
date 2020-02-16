@@ -31,3 +31,27 @@ class DistrictDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.District
         fields = ('id', 'name', 'taluks')
+
+
+class SearchByTalukSerializer(serializers.ModelSerializer):
+
+    requested_blood_group = serializers.SerializerMethodField()
+    blood_group_count = serializers.SerializerMethodField()
+
+    class Meta:
+        model = models.College
+        fields = (
+            'id',
+            'name',
+            'location',
+            'requested_blood_group',
+            'blood_group_count',
+            )
+
+
+    def get_requested_blood_group(self, college):
+        return self.context.get('requested_blood_group')
+
+    def get_blood_group_count(self, college):
+        count = college.blood_group_count(self.context.get('requested_blood_group'))
+        return count

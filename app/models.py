@@ -34,6 +34,10 @@ class College(models.Model):
         Taluk,
         on_delete=models.CASCADE,
         related_name="colleges")
+    
+
+    def blood_group_count(self, group_id):
+        return self.students.filter(blood_group=group_id).count()
 
     def __str__(self):
         return self.name
