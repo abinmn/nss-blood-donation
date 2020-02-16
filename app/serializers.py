@@ -7,3 +7,10 @@ class DistrictSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.District
         fields = ('id', 'name')
+
+
+class BloodGroupSerializer(serializers.ModelSerializer):
+    """Serialize blood_group object."""
+    class Meta:
+        model = models.BloodGroup
+        fields = ('id', 'group')
