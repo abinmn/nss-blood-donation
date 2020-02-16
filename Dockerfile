@@ -6,6 +6,6 @@ WORKDIR /app
 RUN pipenv lock --requirements > requirements.txt
 RUN pip install -r requirements.txt
 
-
+EXPOSE 80
 RUN chmod +x /app/entrypoint.sh
 ENTRYPOINT "/app/entrypoint.sh"

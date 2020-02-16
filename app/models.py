@@ -29,6 +29,7 @@ class College(models.Model):
     """Table to store District details."""
 
     name = models.CharField(max_length=200)
+    location = models.CharField(max_length=200)
     taluk = models.ForeignKey(
         Taluk,
         on_delete=models.CASCADE,
