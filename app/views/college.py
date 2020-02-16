@@ -10,6 +10,7 @@ from app import serializers
 class CollegeByTalukViewset(viewsets.ViewSet):
     """Retrieve list of all colleges in a taluk."""
 
+    @swagger_auto_schema(responses={'200': serializers.SearchByTalukSerializer})
     def list(self, request):
         queryset = self.get_queryset()
         requested_blood_group = int(request.query_params.get('blood_group'))

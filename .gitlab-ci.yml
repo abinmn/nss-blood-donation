@@ -28,10 +28,10 @@ deploy:
     - ssh-keyscan -H $DEVELOPMENT_SERVER_IP >> ~/.ssh/known_hosts  
     ###### Pull the registry to deployment server and recereate the docker service #####    
 
-    - ssh $DEVELOPMENT_SERVER_USERNAME@$DEVELOPMENT_SERVER_IP docker system prune -f
     - ssh $DEVELOPMENT_SERVER_USERNAME@$DEVELOPMENT_SERVER_IP docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY 
     - ssh $DEVELOPMENT_SERVER_USERNAME@$DEVELOPMENT_SERVER_IP docker pull $CI_REGISTRY/$CI_PROJECT_PATH:latest
     - ssh $DEVELOPMENT_SERVER_USERNAME@$DEVELOPMENT_SERVER_IP docker container stop $(docker container ls -aq)
+    - ssh $DEVELOPMENT_SERVER_USERNAME@$DEVELOPMENT_SERVER_IP docker system prune -a -f
     - ssh $DEVELOPMENT_SERVER_USERNAME@$DEVELOPMENT_SERVER_IP docker run -d -p 8080:80 $CI_REGISTRY/$CI_PROJECT_PATH:latest
 
   only:
