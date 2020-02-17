@@ -50,7 +50,10 @@ class SearchByTalukSerializer(serializers.ModelSerializer):
 
 
     def get_requested_blood_group(self, college):
-        return self.context.get('requested_blood_group')
+        blood_group_id = self.context.get('requested_blood_group')
+        blood_group = models.BloodGroup.objects.get(id=blood_group_id).group
+        return blood_group
+
 
     def get_blood_group_count(self, college):
         count = college.blood_group_count(self.context.get('requested_blood_group'))

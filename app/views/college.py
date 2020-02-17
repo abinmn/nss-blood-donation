@@ -1,6 +1,8 @@
 from rest_framework import viewsets
 from rest_framework.response import Response
 from drf_yasg.utils import swagger_auto_schema
+from drf_yasg.openapi import Parameter
+from drf_yasg.openapi import IN_QUERY
 
 
 from app import models
@@ -10,7 +12,10 @@ from app import serializers
 class CollegeByTalukViewset(viewsets.ViewSet):
     """Retrieve list of all colleges in a taluk."""
 
-    @swagger_auto_schema(responses={'200': serializers.SearchByTalukSerializer})
+    @swagger_auto_schema(responses={'200': serializers.SearchByTalukSerializer}, manual_parameters=[
+                         Parameter(name='blood_group', required=True, in_=IN_QUERY, type='int'),
+                         Parameter(name='taluk', required=True, in_=IN_QUERY, type='int'),
+                         ])
     def list(self, request):
         queryset = self.get_queryset()
         requested_blood_group = int(request.query_params.get('blood_group'))
