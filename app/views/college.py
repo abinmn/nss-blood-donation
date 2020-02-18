@@ -17,7 +17,7 @@ class CollegeByTalukViewset(viewsets.ViewSet):
                          Parameter(name='taluk', required=True, in_=IN_QUERY, type='int'),
                          ])
     def list(self, request):
-        queryset = self.get_queryset()
+        queryset = self.get_queryset(blood_group_count)
         requested_blood_group = int(request.query_params.get('blood_group'))
 
         serializer = serializers.SearchByTalukSerializer(
@@ -31,3 +31,9 @@ class CollegeByTalukViewset(viewsets.ViewSet):
         blood_group_id = int(self.request.query_params.get('blood_group'))
         colleges = models.Taluk.objects.get(id=taluk_id).colleges.all()
         return colleges
+
+
+class CollegeDetailsViewset(viewsets.ReadOnlyModelViewSet):
+    """Get contact details and other blood group details in a college."""
+    queryset = models.College.objects.all()
+    serializer_class = serializers.CollegeSerializer

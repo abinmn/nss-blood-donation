@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 
 from django.db import models
+from django.db.models import F, Count
 
 
 class District(models.Model):
@@ -34,10 +35,20 @@ class College(models.Model):
         Taluk,
         on_delete=models.CASCADE,
         related_name="colleges")
-    
 
-    def blood_group_count(self, group_id):
+    def blood_group_count_by_id(self, group_id):
         return self.students.filter(blood_group=group_id).count()
+
+    def blood_group_count(self):
+        return self.students.values(group=F('blood_group__group')).order_by(
+            'blood_group').annotate(count=Count('blood_group'))
+
+    def volunteer_details(self):
+        return self.volunteers.values(
+            name=F('student__name'),
+            phone_number=F('student__phone_number'),
+            email=F('student__email')
+            )
 
     def __str__(self):
         return self.name
@@ -57,7 +68,7 @@ class Student(models.Model):
 
     name = models.CharField(max_length=300)
     student_class = models.CharField(max_length=10)
-    mobile_number = models.BigIntegerField()
+    phone_number = models.BigIntegerField()
     email = models.EmailField()
     passout_year = models.IntegerField()
     height = models.IntegerField()
@@ -85,12 +96,19 @@ class Donation(models.Model):
         related_name="donation_history")
     donated_date = models.DateField(auto_now=True)
 
+    def __str__(self):
+        return f'{self.student.name} - {self.donated_date}'
+
 
 class VolunteerProfile(models.Model):
     """Table to store District details."""
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    student = models.OneToOneField(Student, on_delete=models.CASCADE)
     college = models.ForeignKey(
         College,
         on_delete=models.CASCADE,
         related_name="volunteers")
+
+    def __str__(self):
+        return f'{self.user}'
