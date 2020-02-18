@@ -46,15 +46,44 @@ class SearchByTalukSerializer(serializers.ModelSerializer):
             'location',
             'requested_blood_group',
             'blood_group_count',
-            )
-
+        )
 
     def get_requested_blood_group(self, college):
         blood_group_id = self.context.get('requested_blood_group')
-        blood_group = models.BloodGroup.objects.get(id=blood_group_id).group
-        return blood_group
-
+        return models.BloodGroup.objects.get(id=blood_group_id).group
 
     def get_blood_group_count(self, college):
-        count = college.blood_group_count(self.context.get('requested_blood_group'))
-        return count
+        return college.blood_group_count_by_id(
+            self.context.get('requested_blood_group'))
+
+
+class VolunteerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.VolunteerProfile
+        depth = 1
+        fields = (
+            'name',
+            'email',
+            'mobile_number'
+        )
+class CollegeSerializer(serializers.ModelSerializer):
+
+    blood_group_count = serializers.SerializerMethodField()
+    poc_details = serializers.SerializerMethodField()
+
+    class Meta:
+        model = models.College
+        fields = (
+            'id',
+            'name',
+            'location',
+            'blood_group_count',
+            'poc_details'
+        )
+
+    def get_blood_group_count(self, college):
+        return college.blood_group_count()
+
+    def get_poc_details(self, college):
+        volunteers = college.volunteer_details()
+        return volunteers
