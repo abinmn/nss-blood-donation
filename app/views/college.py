@@ -26,8 +26,13 @@ class CollegeByTalukViewset(viewsets.ViewSet):
                              type=openapi.TYPE_INTEGER),
                          ])
     def list(self, request):
+<<<<<<< HEAD
         queryset = self.get_queryset()
         requested_blood_group = self.request.query_params.get('blood_group')
+=======
+        queryset = self.get_queryset(blood_group_count)
+        requested_blood_group = int(request.query_params.get('blood_group'))
+>>>>>>> 2ccadf0ed9be836b61a2055e4589a40c8f6942aa
 
         serializer = serializers.SearchByTalukSerializer(
             queryset, many=True, context={
@@ -50,4 +55,8 @@ class CollegeByTalukViewset(viewsets.ViewSet):
 class CollegeDetailsViewset(viewsets.ReadOnlyModelViewSet):
     """Get contact details and other blood group details in a college."""
     queryset = models.College.objects.all()
+<<<<<<< HEAD
     serializer_class = serializers.CollegeSerializer
+=======
+    serializer_class = serializers.CollegeSerializer
+>>>>>>> 2ccadf0ed9be836b61a2055e4589a40c8f6942aa
