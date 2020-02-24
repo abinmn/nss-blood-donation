@@ -68,7 +68,7 @@ class Student(models.Model):
 
     name = models.CharField(max_length=300)
     student_class = models.CharField(max_length=10)
-    phone_number = models.BigIntegerField()
+    phone_number = models.CharField(max_length=10)
     email = models.EmailField()
     passout_year = models.IntegerField()
     height = models.IntegerField()
