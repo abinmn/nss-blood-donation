@@ -66,6 +66,12 @@ class BloodGroup(models.Model):
 class Student(models.Model):
     """Table to store student details."""
 
+    GENDER_CHOICE = (
+        ('M', 'Male'),
+        ('F', 'Female'),
+        ('O', 'Others')
+    )
+
     name = models.CharField(max_length=300)
     student_class = models.CharField(max_length=10)
     phone_number = models.CharField(max_length=10)
@@ -73,6 +79,7 @@ class Student(models.Model):
     passout_year = models.IntegerField()
     height = models.IntegerField()
     weight = models.IntegerField()
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICE)
     blood_group = models.ForeignKey(
         BloodGroup,
         on_delete=models.CASCADE,
