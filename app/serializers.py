@@ -70,6 +70,8 @@ class VolunteerSerializer(serializers.ModelSerializer):
             'email',
             'mobile_number'
         )
+
+
 class CollegeSerializer(serializers.ModelSerializer):
 
     blood_group_count = serializers.SerializerMethodField()
@@ -95,19 +97,28 @@ class CollegeSerializer(serializers.ModelSerializer):
 
 class StudentSerializer(serializers.ModelSerializer):
 
-    blood_group = serializers.SerializerMethodField()
+    # blood_group_id = serializers.PrimaryKeyRelatedField(queryset=models.BloodGroup.objects.all())
+    # blood_group = serializers.CharField(source='blood_group.group')
+
+    blood_group = BloodGroupSerializer(read_only=True)
+    blood_group_id = serializers.PrimaryKeyRelatedField(
+        queryset=models.BloodGroup.objects.all(), write_only=True, source='blood_group')
+
     class Meta:
         model = models.Student
         fields = (
             'id',
             'name',
+            'department',
             'phone_number',
             'email',
             'passout_year',
             'height',
             'weight',
+            'gender',
             'blood_group',
+            'blood_group_id',
         )
-    
+
     def get_blood_group(self, student):
-        return student.college.name
+        return student.blood_group.name
